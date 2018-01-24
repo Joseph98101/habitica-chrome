@@ -41,11 +41,17 @@ var PomodoroTracker = (function() {
             this.appBridge = appBridge;
 
         },
-
+/*
+ * Note: The original goal of this code was to credit the main or combo pomodoro task for each pomodoro or set completed,
+ *       and to debit the main pomodoro task for each pomodoro or break interrupted. I question whether most users want to
+ *       be punished for skipped breaks, but without some logic to determine whether a pomdoro "stoppped" or "skipped" 
+ *       was also done, it seems best to comment out the punishments until someone can add the logic, plus maybe some
+ *       user options to confirm desired behavior. Therefore, I have commented out the 4 lines below. Joseph 1/24/18 
+ */
         enable:function() {
             this.appBridge.addListener('pomTracker.pomodoro.done', this.pomodoroDone);
-            this.appBridge.addListener('pomTracker.pomodoro.stopped', this.pomodoroInterrupted);
-            this.appBridge.addListener('pomTracker.break.skipped', this.pomodoroInterrupted);
+//            this.appBridge.addListener('pomTracker.pomodoro.stopped', this.pomodoroInterrupted);
+//            this.appBridge.addListener('pomTracker.break.skipped', this.pomodoroInterrupted);
             pomTracker.appBridge.trigger('controller.addTask', {
                 urlSuffix: pomTracker.urlPrefix,
                 object: pomTracker.normalObj,
@@ -60,8 +66,8 @@ var PomodoroTracker = (function() {
 
         disable: function() {
             this.appBridge.removeListener('pomTracker.pomodoro.done', this.pomodoroDone);
-            this.appBridge.removeListener('pomTracker.pomodoro.stopped', this.pomodoroInterrupted);
-            this.appBridge.removeListener('pomTracker.break.skipped', this.pomodoroInterrupted);
+//            this.appBridge.removeListener('pomTracker.pomodoro.stopped', this.pomodoroInterrupted);
+//            this.appBridge.removeListener('pomTracker.break.skipped', this.pomodoroInterrupted);
         },
 
         setOptions: function(params) {
