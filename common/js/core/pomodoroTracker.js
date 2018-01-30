@@ -41,11 +41,21 @@ var PomodoroTracker = (function() {
             this.appBridge = appBridge;
 
         },
-
+/*
+ * Note: The apparent design of this code is to penalize the user when either a pomodoro or a break is 
+ * interrupted, but it looks like Pomodoro Tracker changed its events so pomodoro.skipped and 
+ * break.skipped get called even when a pomo or a break is completed. As a result, the code penalizes
+ * the user twice for each successful pomodoro.\
+ *
+ * The cleanest thing would be to work the code so it penalizes the user correctly, and maybe add a 
+ * user option to see if the user wants to be penalized for skipped breaks. For now, I'm just commenting 
+ * out all the penalties. :)  Joseph
+ */
+        
         enable:function() {
             this.appBridge.addListener('pomTracker.pomodoro.done', this.pomodoroDone);
-            this.appBridge.addListener('pomTracker.pomodoro.stopped', this.pomodoroInterrupted);
-            this.appBridge.addListener('pomTracker.break.skipped', this.pomodoroInterrupted);
+//            this.appBridge.addListener('pomTracker.pomodoro.stopped', this.pomodoroInterrupted);
+//            this.appBridge.addListener('pomTracker.break.skipped', this.pomodoroInterrupted);
             pomTracker.appBridge.trigger('controller.addTask', {
                 urlSuffix: pomTracker.urlPrefix,
                 object: pomTracker.normalObj,
@@ -60,8 +70,8 @@ var PomodoroTracker = (function() {
 
         disable: function() {
             this.appBridge.removeListener('pomTracker.pomodoro.done', this.pomodoroDone);
-            this.appBridge.removeListener('pomTracker.pomodoro.stopped', this.pomodoroInterrupted);
-            this.appBridge.removeListener('pomTracker.break.skipped', this.pomodoroInterrupted);
+//            this.appBridge.removeListener('pomTracker.pomodoro.stopped', this.pomodoroInterrupted);
+//            this.appBridge.removeListener('pomTracker.break.skipped', this.pomodoroInterrupted);
         },
 
         setOptions: function(params) {
