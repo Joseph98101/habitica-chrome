@@ -1,6 +1,6 @@
 /**
  * Created by balor on 16-01-15. 
- * Comments by Joseph Jan and Feb 2018
+ * Most comments by Joseph Jan and Feb 2018, especially the dumb/obvious ones
  */
 
 // ready gets called as soon as page comes up
@@ -43,8 +43,9 @@ $(document).ready(function () {
             // listen for messages
             window.addEventListener("message", App.eventHandler, false);
             
-            // Every 1000 millisections, run this function
-            // Explain 
+            // Every 1000 milliseconds (1 second), run this function:
+            // If the start button does not read resume (i.e. if a Pomodoro or break is stopped or started 
+            // but not paused, set App.lastTimerCount to the number of seconds showing on the page timer
             setInterval(function () {
                 if ($("pomodoro .pomodoro-timer_buttons button").html() != 'RESUME') {
                     App.lastTimerCount = $('pomodoro .pomodoro-timer span').html();
@@ -60,10 +61,12 @@ $(document).ready(function () {
 
         },
 
+        //When do App.start and App.stop get called? Are they automatic?
         start: function () {
             this.isRunning = true;
         },
 
+        //If the time showing on the timer doesn't equal last count, then call pomInterrupted
         stop: function () {
             this.isRunning = false;
             var currentCount = $('pomodoro .pomodoro-timer span').html();
