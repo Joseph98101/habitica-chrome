@@ -54,8 +54,8 @@ var PomodoroTracker = (function() {
         
         enable:function() {
             this.appBridge.addListener('pomTracker.pomodoro.done', this.pomodoroDone);
-//            this.appBridge.addListener('pomTracker.pomodoro.stopped', this.pomodoroInterrupted);
-//            this.appBridge.addListener('pomTracker.break.skipped', this.pomodoroInterrupted);
+            this.appBridge.addListener('pomTracker.pomodoro.stopped', this.pomodoroInterrupted);
+            this.appBridge.addListener('pomTracker.break.skipped', this.pomodoroInterrupted);
             pomTracker.appBridge.trigger('controller.addTask', {
                 urlSuffix: pomTracker.urlPrefix,
                 object: pomTracker.normalObj,
@@ -70,8 +70,8 @@ var PomodoroTracker = (function() {
 
         disable: function() {
             this.appBridge.removeListener('pomTracker.pomodoro.done', this.pomodoroDone);
-//            this.appBridge.removeListener('pomTracker.pomodoro.stopped', this.pomodoroInterrupted);
-//            this.appBridge.removeListener('pomTracker.break.skipped', this.pomodoroInterrupted);
+            this.appBridge.removeListener('pomTracker.pomodoro.stopped', this.pomodoroInterrupted);
+            this.appBridge.removeListener('pomTracker.break.skipped', this.pomodoroInterrupted);
         },
 
         setOptions: function(params) {
